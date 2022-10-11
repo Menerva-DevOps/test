@@ -5,11 +5,7 @@ on:
   push:
     branches: [ "main" ]
 
-env:
-  PROJECT_ID: YOUR_PROJECT_ID # TODO: update Google Cloud project id
-  GAR_LOCATION: YOUR_GAR_LOCATION # TODO: update Artifact Registry location
-  SERVICE: YOUR_SERVICE_NAME # TODO: update Cloud Run service name
-  REGION: YOUR_SERVICE_REGION # TODO: update Cloud Run service region
+
 
 jobs:
   deploy:
@@ -41,8 +37,4 @@ jobs:
       - name: Build Docker image
         run: docker build -t frontend:test1 . 
         
-      - name: Deploy to container     
-      - id: install-aws-cli
-        uses: unfor19/install-aws-cli-action@v1.0.3
-        with:
-         version: 2  
+   
