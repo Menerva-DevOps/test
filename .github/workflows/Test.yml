@@ -41,8 +41,6 @@ jobs:
       - name: Build Docker image
         run: docker build -t frontend:test1 . 
 
-    build:
-      
       
       - name: Deploy to container     
       - id: install-aws-cli
