@@ -42,9 +42,3 @@ jobs:
         run: docker build -t frontend:test1 . 
 
       
-      - name: Deploy to container     
-      - id: install-aws-cli
-        uses: unfor19/install-aws-cli-action@v1.0.3
-        with:
-         version: 2  
-       
