@@ -46,5 +46,5 @@ jobs:
          scp -o "StrictHostKeyChecking no" fn_image.tar ubuntu@$NPCI_DEV_SERVER:~
          scp -o "StrictHostKeyChecking no" deploy_frontend.sh ubuntu@$NPCI_DEV_SERVER:~
          scp -o "StrictHostKeyChecking no" fn_tag ubuntu@$NPCI_DEV_SERVER:~
-         ssh -o "StrictHostKeyChecking no" ubuntu@$NPCI_DEV_SERVER 'chmod +x deploy_frontend.sh; ./deploy_frontend.sh'     
+         ssh -o "StrictHostKeyChecking no" ubuntu@$NPCI_DEV_SERVER 'chmod +x deploy_frontend.sh; ./deploy_frontend.sh'
 
