@@ -41,8 +41,10 @@ jobs:
 
       - name: Build Docker Container
         run: |-
-          docker build -t frontend:$CI_COMMIT_SHA . ./
-          docker save --output fn_image.tar frontend:$CI_COMMIT_SHA
+          docker build \
+          --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg GITHUB_REF="$GITHUB_REF" \
           
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
