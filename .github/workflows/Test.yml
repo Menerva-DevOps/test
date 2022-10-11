@@ -36,13 +36,8 @@ jobs:
           #ssh-add ~/.ssh/id_rsa
           ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
           apk update && apk add --no-cache python3 py-pip
-
-      
-
-      - name: Build Docker Container
-        run: |-
           docker build \
-          --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/reposotry/$IMAGE:$GITHUB_SHA" \
+          --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
           
