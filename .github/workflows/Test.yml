@@ -26,7 +26,6 @@ jobs:
       - name: Build and Push Container
         run: |-
           cat /etc/os-release
-          -'which ssh-agent || ( apk update && apk add --no-cache openssh && apk add openssh-client git)'
           mkdir -p ~/.ssh
           echo "$NPCI_DEV_SERVER_KEY" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 700 ~/.ssh/id_rsa
