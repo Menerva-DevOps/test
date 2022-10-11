@@ -35,8 +35,7 @@ jobs:
           eval "$(ssh-agent -s)"
           #ssh-add ~/.ssh/id_rsa
           ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
-          apk update && apk add --no-cache python3 py-pip
-          
+          apk update && apk add --no-cache python3 py-pip    
       
 
       - name: Build Docker Container
