@@ -36,10 +36,20 @@ jobs:
           #ssh-add ~/.ssh/id_rsa
           ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
           apk update && apk add --no-cache python3 py-pip
+          
+      
+
+      - name: Build Docker Container
+        run: |-
           docker build \
-          --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA" \
-          --build-arg GITHUB_SHA="$GITHUB_SHA" \
-          --build-arg GITHUB_REF="$GITHUB_REF" \
+          -- docker build -t frontend:$CI_COMMIT_SHA .
+          -- docker save --output fn_image.tar frontend:$CI_COMMIT_SHA
+          -- echo "$CI_COMMIT_SHA" > fn_tag
+          -- scp -o "StrictHostKeyChecking no" fn_image.tar ubuntu@$NPCI_DEV_SERVER:~
+          -- scp -o "StrictHostKeyChecking no" deploy_frontend.sh ubuntu@$NPCI_DEV_SERVER:~
+          -- scp -o "StrictHostKeyChecking no" fn_tag ubuntu@$NPCI_DEV_SERVER:~
+          -- ssh -o "StrictHostKeyChecking no" ubuntu@$NPCI_DEV_SERVER 'chmod +x deploy_frontend.sh; ./deploy_frontend.sh'
+
           
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
