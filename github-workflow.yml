@@ -27,24 +27,24 @@ jobs:
 # Build the Docker image
     - name: Build
       run: |-
-            # configuring ssh connection
-             'which ssh-agent || ( apk update && apk add --no-cache openssh && apk add openssh-client git)'
-             mkdir -p ~/.ssh
-             echo "$NPCI_DEV_SERVER_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-             chmod 700 ~/.ssh/id_rsa
-             eval "$(ssh-agent -s)"
-             ssh-add ~/.ssh/id_rsa
-             ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
-             apk update && apk add --no-cache python3 py-pip
-           #Changing configuration file for development environments
-           #need to add this when the backend is setup
-             mv $DEV_NPCI_FRONTEND_CONF src/environments/environment.prod.ts
-           #Build and Push docker image
-             docker build -t frontend:$CI_COMMIT_SHA .
-             docker save --output fn_image.tar frontend:$CI_COMMIT_SHA
-             echo "$CI_COMMIT_SHA" > fn_tag
-             scp -o "StrictHostKeyChecking no" fn_image.tar ubuntu@$NPCI_DEV_SERVER:~
-             scp -o "StrictHostKeyChecking no" deploy_frontend.sh ubuntu@$NPCI_DEV_SERVER:~
-             scp -o "StrictHostKeyChecking no" fn_tag ubuntu@$NPCI_DEV_SERVER:~
-             ssh -o "StrictHostKeyChecking no" ubuntu@$NPCI_DEV_SERVER 'chmod +x deploy_frontend.sh; ./deploy_frontend.sh'
+       # configuring ssh connection
+         'which ssh-agent || ( apk update && apk add --no-cache openssh && apk add openssh-client git)'
+         mkdir -p ~/.ssh
+         echo "$NPCI_DEV_SERVER_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+         chmod 700 ~/.ssh/id_rsa
+         eval "$(ssh-agent -s)"
+         ssh-add ~/.ssh/id_rsa
+         ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
+         apk update && apk add --no-cache python3 py-pip
+         #Changing configuration file for development environments
+         #need to add this when the backend is setup
+         mv $DEV_NPCI_FRONTEND_CONF src/environments/environment.prod.ts
+         #Build and Push docker image
+         docker build -t frontend:$CI_COMMIT_SHA .
+         docker save --output fn_image.tar frontend:$CI_COMMIT_SHA
+         echo "$CI_COMMIT_SHA" > fn_tag
+         scp -o "StrictHostKeyChecking no" fn_image.tar ubuntu@$NPCI_DEV_SERVER:~
+         scp -o "StrictHostKeyChecking no" deploy_frontend.sh ubuntu@$NPCI_DEV_SERVER:~
+         scp -o "StrictHostKeyChecking no" fn_tag ubuntu@$NPCI_DEV_SERVER:~
+         ssh -o "StrictHostKeyChecking no" ubuntu@$NPCI_DEV_SERVER 'chmod +x deploy_frontend.sh; ./deploy_frontend.sh'     
 
