@@ -40,7 +40,7 @@ jobs:
       
 
       - name: Build Docker Container
-        run: docker build -t frontend:Dockerfile .
+        run: docker build -t frontend:test1 .
 
           
       # If required, use the Cloud Run url output in later steps
