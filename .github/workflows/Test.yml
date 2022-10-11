@@ -41,7 +41,6 @@ jobs:
 
       - name: Build Docker Container
         run: |-
-          docker build \
           -- docker save --output fn_image.tar frontend:test1 .
           -- echo "$CI_COMMIT_SHA" > fn_tag
           -- scp -o "StrictHostKeyChecking no" fn_image.tar ubuntu@$NPCI_DEV_SERVER:~
