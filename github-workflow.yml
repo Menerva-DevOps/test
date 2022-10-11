@@ -27,7 +27,7 @@ jobs:
 # Build the Docker image
     - name: Build
       run: |-
-                    # configuring ssh connection
+            # configuring ssh connection
              'which ssh-agent || ( apk update && apk add --no-cache openssh && apk add openssh-client git)'
              mkdir -p ~/.ssh
              echo "$NPCI_DEV_SERVER_KEY" | tr -d '\r' > ~/.ssh/id_rsa
