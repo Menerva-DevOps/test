@@ -37,7 +37,5 @@ jobs:
       - name: Build Docker image
         run: docker build -t frontend:test1 . 
         
-  Deploy:
-    name: Build and Deploy for NPCI Dev in AWS
-    runs-on: ubuntu-latest
+
      
