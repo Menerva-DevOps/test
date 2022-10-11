@@ -26,8 +26,15 @@ jobs:
       - name: Build and Push Container
         run: |-
           cat /etc/os-release
-          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" ./
-          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+          'which ssh-agent || ( apk update && apk add --no-cache openssh && apk add openssh-client git)'
+          mkdir -p ~/.ssh
+          echo "$NPCI_DEV_SERVER_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh/id_rsa
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_rsa
+          ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
+          apk update && apk add --no-cache python3 py-pip
+
       # END - Docker auth and build
 
       - name: Deploy to Cloud Run
