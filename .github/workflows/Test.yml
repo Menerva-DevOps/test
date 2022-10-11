@@ -8,7 +8,7 @@ on:
 
 
 jobs:
-  deploy:
+  Build:
     # Add 'id-token' with the intended permissions for workload identity federation
     permissions:
       contents: 'read'
@@ -37,4 +37,7 @@ jobs:
       - name: Build Docker image
         run: docker build -t frontend:test1 . 
         
-   
+  Deploy:
+     - name: Build and Deploy 
+       runs-on: ubuntu-latest
+     
