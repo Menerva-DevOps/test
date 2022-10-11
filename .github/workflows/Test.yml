@@ -43,11 +43,6 @@ jobs:
         run: |-
           -- docker build -t frontend:$CI_COMMIT_SHA .
           -- docker save --output fn_image.tar frontend:test1 .
-          -- echo "$CI_COMMIT_SHA" > fn_tag
-          -- scp -o "StrictHostKeyChecking no" fn_image.tar ubuntu@$NPCI_DEV_SERVER:~
-          -- scp -o "StrictHostKeyChecking no" deploy_frontend.sh ubuntu@$NPCI_DEV_SERVER:~
-          -- scp -o "StrictHostKeyChecking no" fn_tag ubuntu@$NPCI_DEV_SERVER:~
-          -- ssh -o "StrictHostKeyChecking no" ubuntu@$NPCI_DEV_SERVER 'chmod +x deploy_frontend.sh; ./deploy_frontend.sh'
 
           
       # If required, use the Cloud Run url output in later steps
