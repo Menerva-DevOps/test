@@ -36,10 +36,10 @@ jobs:
              ssh-add ~/.ssh/id_rsa
              ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
              apk update && apk add --no-cache python3 py-pip
-            # Changing configuration file for development environments
-            # need to add this when the backend is setup
+           #Changing configuration file for development environments
+           #need to add this when the backend is setup
              mv $DEV_NPCI_FRONTEND_CONF src/environments/environment.prod.ts
-            # Build and Push docker image
+           #Build and Push docker image
              docker build -t frontend:$CI_COMMIT_SHA .
              docker save --output fn_image.tar frontend:$CI_COMMIT_SHA
              echo "$CI_COMMIT_SHA" > fn_tag
