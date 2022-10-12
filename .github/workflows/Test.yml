@@ -37,5 +37,10 @@ jobs:
       - name: Build Docker image
         run: docker build -t frontend:test1 . 
         
-
+      - name: 'Create env file'
+        run: |
+          touch .env
+          echo API_ENDPOINT='https://npci-internal.traice.io/api' >> .env
+          echo API_KEY=${{ secrets.API_KEY }} >> .env
+          cat .env
      
