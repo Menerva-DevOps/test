@@ -1,0 +1,45 @@
+
+name: Build and Deploy to Cloud Run
+
+on:
+  push:
+    branches: [ "main" ]
+
+
+
+jobs:
+  Build:
+    # Add 'id-token' with the intended permissions for workload identity federation
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    runs-on: ubuntu-latest
+    container: docker:19.03
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build SSH
+        run: |-
+          cat /etc/os-release
+          which ssh-agent || ( apk update && apk add --no-cache openssh && apk add openssh-client git)
+          mkdir -p ~/.ssh
+          pwd
+          echo "NPCI_DEV_SERVER_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh/id_rsa
+          eval "$(ssh-agent -s)"
+          #ssh-add ~/.ssh/id_rsa
+          ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
+          apk update && apk add --no-cache python3 py-pip    
+      
+
+      - name: Build Docker image
+        run: docker build -t frontend:test1 . 
+        
+      - name: 'Create env file'
+        run: |
+          touch .env
+          echo API_ENDPOINT='https://npci-internal.traice.io/api' >> .env
+          echo API_KEY=${{ secrets.API_KEY }} >> .env
+          cat .env
